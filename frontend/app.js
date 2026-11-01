@@ -122,14 +122,22 @@ async function sendBackendRequest(endpoint, payload) {
     body: JSON.stringify(payload)
   });
 
-  let result;
+  const rawResponse = await response.text();
 
-  try {
-    result = await response.json();
-  } catch {
-    throw new Error("The backend returned an invalid response.");
-  }
+let result;
 
+try {
+  result = JSON.parse(rawResponse);
+} catch {
+  console.error("Invalid backend response:", {
+    status: response.status,
+    response: rawResponse
+  });
+
+  throw new Error(
+    `Backend returned non-JSON data (HTTP ${response.status}). Check the browser console.`
+  );
+}
   if (!response.ok) {
     throw new Error(result.error || "The backend request failed.");
   }
