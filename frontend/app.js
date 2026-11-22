@@ -309,7 +309,7 @@ async function lookupBatch(batchId) {
         </div>
 
         <div class="detail-cell">
-          <span class="detail-label">Current custodian</span>
+          <span class="detail-label">Next custodian</span>
           <span class="detail-value">${escapeHtml(organizationName(batch.currentCustodian))}</span>
         </div>
 
